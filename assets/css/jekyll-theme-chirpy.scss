@@ -1,6 +1,7 @@
 ---
 ---
-@import '../node_modules/bootstrap/dist/css';
+
+@import '../node_modules/bootstrap/scss/bootstrap';
 
 @import 'main
 {%- if jekyll.environment == 'production' -%}
