@@ -1,12 +1,21 @@
 ---
 ---
 
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import 'bootstrap';
 
-@import 'main
-{%- if jekyll.environment == 'production' -%}
-  .bundle
-{%- endif -%}
-';
+@if jekyll.environment == 'production' {
+  @import 'main.bundle'; // Make sure 'main.bundle' exists
+} @else {
+  @import 'main'; // Import the regular main stylesheet
+}
+
+// @import 'bootstrap';
+
+
+// @import 'main
+// {%- if jekyll.environment == 'production' -%}
+//   .bundle
+// {%- endif -%}
+// ';
 
 /* append your custom style below */
