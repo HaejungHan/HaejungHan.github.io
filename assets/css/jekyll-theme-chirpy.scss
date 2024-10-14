@@ -3,11 +3,6 @@
 
 @import 'bootstrap';
 
-@if jekyll.environment == 'production' {
-  @import 'main.bundle'; // Make sure 'main.bundle' exists
-} @else {
-  @import 'main'; // Import the regular main stylesheet
-}
 
 // @import 'bootstrap';
 
