@@ -689,7 +689,12 @@ $btn-mb: 0.5rem;
   overflow-y: auto;
   width: $sidebar-width;
   z-index: 99;
-  background: var(--sidebar-bg);
+//  background: var(--sidebar-bg);
+  background-image: url('/assets/img/mypicture.jpg');
+  background-size: cover;  /*이미지의 size가 보여질 부분의 사이즈와 다른 경우에는 이미지 크기를 꽉차게 만든다 */
+  background-repeat: no-repeat;
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(74,146,232,1) 100%);
   border-right: 1px solid var(--sidebar-border-color);
 
   /* Hide scrollbar for IE, Edge and Firefox */
@@ -782,17 +787,29 @@ $btn-mb: 0.5rem;
 
         &:hover {
           background-color: var(--sidebar-hover-bg);
+          span {
+            opacity: 1;
+            color: rgba(7, 7, 7, 0.99);
+          }
+          i {
+            font-size: 100%;
+            opacity: 1;
+            margin-right: 1.5rem;
+            color: rgba(7, 7, 7, 0.99);
+          }
         }
 
         i {
           font-size: 95%;
           opacity: 0.8;
           margin-right: 1.5rem;
+          color: rgba(7, 7, 7, 0.99);
         }
 
         span {
           font-size: 90%;
           letter-spacing: 0.2px;
+          color: rgba(7, 7, 7, 0.99);
         }
       }
 
@@ -803,6 +820,13 @@ $btn-mb: 0.5rem;
 
           span {
             opacity: 1;
+            color: rgba(7, 7, 7, 0.99);
+          }
+          i {
+            font-size: 100%;
+            opacity: 1;
+            margin-right: 1.5rem;
+            color: rgba(7, 7, 7, 0.99);
           }
         }
       }
