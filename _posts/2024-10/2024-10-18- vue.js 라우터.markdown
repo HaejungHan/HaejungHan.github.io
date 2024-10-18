@@ -1,5 +1,5 @@
 ---
-title: TIL(20241013) [Vue.js Router]
+title: TIL(20241018) [Vue.js Router]
 author: hanni
 date: 2024-10-18 11:13:00 +0800
 categories: TIL

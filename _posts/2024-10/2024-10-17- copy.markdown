@@ -1,5 +1,5 @@
 ---
-title: TIL(20241012) [네트워크(Network)]
+title: TIL(20241017) [네트워크(Network)]
 author: hanni
 date: 2024-10-17 11:13:00 +0800
 categories: TIL
