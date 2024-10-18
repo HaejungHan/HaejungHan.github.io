@@ -216,6 +216,57 @@ npm run serve -> 배포할 때 <br>
 npm run dev -> 개발할 때
 
 
+## 💡 Vue.js 문법 (v-for, v-if)
+
+- 실습문제1 : fruit 배열에서 '바나나'만 노란색으로 표시하기
+
+```javascript
+//template
+    <div v-for="(fruit, index) in fruits" :key="index">
+      <p v-if="fruit === '바나나'" class="text-warning m-0"> {{ index + 1 }} : {{ fruit }}</p>
+      <p v-else class="text-danger mb-0">{{ index + 1 }} : {{ fruit }}</p>
+    </div>
+
+//script
+const fruits = ['사과', '바나나', '수박', '사과', '바나나', '수박'];
+```
+
+
+- 실습문제2 : 나이가 짝수인 사람만 출력하기
+
+```javascript
+// template
+    <div v-for="(family, index) in people" :key="index">
+      <p v-if="family.age%2 === 0" class="mb-0">
+        {{ family.name }} // {{ family.age }} // {{ family.address }}
+      </p>
+    </div>
+
+//scirpt
+const people = [
+  {
+    name: 'hani',
+    age: 33,
+    address: '서울시 구로구 구로동'
+  },
+  {
+    name: 'yoni',
+    age: 35,
+    address: '경기도 평택시 세교동'
+  },
+  {
+    name: '낸내',
+    age: 13,
+    address: '경기도 평택시 세교동'
+  },
+  {
+    name: '초롱',
+    age: 6,
+    address: '경기도 평택시 세교동'
+  }
+]
+
+```
 
 
 
