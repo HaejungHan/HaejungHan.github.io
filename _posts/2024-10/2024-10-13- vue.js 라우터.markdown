@@ -42,12 +42,114 @@ tags: [Vue.js]
 **폴더구조**
 ```
 ├── components
-│   └── Example.vue
+│   └── Navbar.vue
+│   └── Home.vue
+│   └── Study1.vue
 ├── router
 │   └── index.js
 ├── App.vue
 └── main.js
 ```
+
+```javascript
+// NavBar.vue
+<template>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <router-link class="navbar-brand" :to="{name: 'Home'}">HOME</router-link>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item"><router-link class="nav-link text-light" :to="{name: 'Study1'}">Study1</router-link></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script setup>
+
+</script>
+
+<style lang="scss" scoped>
+
+</style>
+```
+
+```javascript
+// router/index.js
+import Home from "@/components/Home.vue";
+import Study1 from "@/components/Study1.vue";
+import { createRouter, createWebHistory } from "vue-router";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/",
+      name: "Home",
+      component: Home
+    },
+    {
+      path: "/study1",
+      name: "Study1",
+      component: Study1
+    }
+  ]
+})
+
+export default router;
+```
+
+```javascript
+//main.js
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
+import router from './router' // import
+
+createApp(App)
+.use(router)
+.mount('#app')
+
+```
+
+```javascript
+// App.vue
+<template>
+ <div>
+  <div>
+    <Navbar />
+  <div class="container">
+    <router-view />
+  </div>
+  </div>
+ </div>
+</template>
+
+  <script setup>
+  import Navbar from './components/Navbar.vue';
+  
+
+  </script>
+
+<style>
+
+
+</style>
+```
+
+
+
 
 ## 💡 부트스트랩 사용하기
 
@@ -68,6 +170,52 @@ createApp(App).mount('#app')
 [Bootstrap page](https://getbootstrap.kr/)
 
 ## 💡 tailwindcss
+
+
+## 💡 컴포넌트
+- App.vue는 부모 컴포넌트, Example.vue 자식 컴포넌트
+
+부모 컴포넌트에 자식 컴포넌트를 가져오고 싶을 때?
+부모 컴포넌트에서 자식 컴포넌트 import 하기
+
+```javascript
+
+<template>
+ <div>
+  <div>
+    <h1>저는 App.vue 컴포넌트 입니다.</h1>
+    <hr>
+    <Example />
+  </div>
+ </div>
+</template>
+
+  <script setup>
+  import Example from './components/Example.vue';
+  </script>
+```
+
+Live server -> 출력
+
+```
+저는 App.vue 컴포넌트 입니다.
+저는 Example.vue 컴포넌트 입니다.
+```
+
+
+### 💡 유용한 익스텐션(추가도구, 라이브러리)
+
+- Vue 3 Snippets 
+- HTML to CSS autocompletion
+- IntelliSense for CSS class names in HTML
+
+
+### 💡 그냥 알아두기
+
+npm run serve -> 배포할 때 <br>
+npm run dev -> 개발할 때
+
+
 
 
 
