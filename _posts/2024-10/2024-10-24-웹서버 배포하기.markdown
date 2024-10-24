@@ -1,0 +1,270 @@
+---
+title: TIL(20241024) [Spring Boot/JSP war Tomcat 웹서버 배포하기(gradle)]
+author: hanni
+date: 2024-10-24 23:50:00 +0800
+categories: TIL
+tags: [SpringBoot, JSP, war, gradle, tomcat]
+---
+
+----------------------------------------------------------------------------
+
+
+이번에 진행할 프로젝트는 개인 사이드 프로젝트를 진행하려고 한다.<br>
+
+주제는 **유투버가 되고 싶은 사람들을 위한 유투브 통계분석 웹서비스**이다.<br>
+
+프론트단을 구성하기 위한 와이어프레임은 다음과 같다.<br>
+
+![image](https://github.com/user-attachments/assets/83428d5a-3a5a-4eb5-b689-6ff6d2703cfc)
+
+이전에 타임리프를 사용해봐서 그런지 JSP를 사용하는게 크게 어렵다고 느껴지진 않았는데..<br>
+아직 백엔드와 DB, Youtube Data API를 연결해보지 않아서 그런지 스트레스는 없지만..<br>
+왠지 험난한 여정이 될 것 같다라는 생각에 .. 잠시 쉬어가는 차원에서(?)...<br>
+톰캣으로 웹서버 배포를 먼저 해보려고 한다.<br>
+
+아래 블로그를 참고하며 했다.<br>
+
+[war로 배포하기](https://a-curious.tistory.com/76)<br>
+[war로 배포하기, SpringBootServletInitalizer](https://teching.tistory.com/170)<br>
+
+
+## 💡 STEP 1. Application 설정 
+
+```java
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, SecurityAutoConfiguration.class})
+public class CreatorHubApplication extends SpringBootServletInitializer {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CreatorHubApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(CreatorHubApplication.class);
+    }
+}
+```
+
+jsp를 사용하는 웹애플리케이션 같은 경우에는 war로 빌드하여 Tomcat이나 Jetty와 같은 외부 서블릿 컨테이너를 통해서 배포를 해야 했는데 이 경우에 SpringBootServletInitalizer를 상속받아서 실행되도록 해야 한다.
+
+#### build.gradle
+
+```java
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'war' // WAR
+}
+
+group = 'com.academy'
+version = '0.0.1-SNAPSHOT'
+apply plugin: 'war'
+
+dependencies {
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    
+}
+
+tasks.named('war') {
+    enabled = true // WAR 파일 생성 가능
+}
+
+tasks.named('bootWar') {
+    enabled = true // Spring Boot WAR 생성 가능
+}
+```
+
+그리고 터미널 창에서 빌드한다.<br>
+
+```
+./gradlew clean build
+```
+
+그러면 build/libs 폴더 아래에 war파일이 생성된다. <br>
+
+![image](https://github.com/user-attachments/assets/5d5a1f10-877d-44ac-bb4d-d1086de9a58c)
+
+ROOT.war라고 파일명을 수정한 이유는 나중에 브라우저에 <br>
+
+```
+http://서버_IP:8080/creator_hub-0.0.1-SNAPSHOT/home
+```
+
+이런식으로 접근을 해야하기 때문에 터미널 창에서<br>
+
+```
+mv build/libs/war파일명.war build/libs/ROOT.war
+```
+
+수정해주면 좋다(?) 그 이유는 하단에 필자가 만난 에러에서 알 수 있다. <br>
+
+web.xml을 수정해도 되지만 옵션이니.. 찾아보면 좋을 것 같다.
+
+## 💡 STEP 2. 웹서버(ubuntu)에 JDK,tomcat설치 
+
+필자는 java 17, tomcat 11버전으로 설치했다.
+참고로 java 17버전을 사용한다면 tomcat 10버전 이상으로 설치하는 것이 좋다.
+
+```
+sudo apt update
+sudo apt install openjdk-17-jdk // JAVA 17설치
+cd /opt
+// tomcat 설치
+sudo wget sudo wget https://downloads.apache.org/tomcat/tomcat-11/v11.0.0/bin/apache-tomcat-11.0.0.tar.gz 
+// 압축 해제
+sudo tar xzf apache-tomcat-11.0.0.tar.gz
+sudo mv apache-tomcat-11.0.0 tomcat
+```
+
+참고로 톰캣 버전이 안맞으면 설치가 안되니 아래 사이트로 이동하여 버전을 잘 확인해야한다.<br>
+
+[tomcat 버전](https://archive.apache.org/dist/tomcat/)<br>
+
+그 다음 톰캣이 실행되는지 확인
+
+```
+cd /opt/tomcat/bin // 여기서 Permission denied가 발생할 수 있다.
+sudo ./startup.sh
+```
+
+혹시나 Permission denied 발생한다면<br>
+
+```
+# 톰캣 디렉토리로 이동
+cd /opt
+
+# 톰캣 디렉토리의 권한 확인
+ls -l
+
+# 톰캣 디렉토리 권한 수정 (소유자를 현재 사용자로 변경)
+sudo chown -R $USER:$USER tomcat
+```
+
+권한 수정이 필요하다.<br>
+
+
+## 💡 STEP 3. 로컬에서 SCP 명령어로 WAR파일을 우분투 서버로 전송
+
+일단 war파일의 경로 알고 있어야 한다.(프로젝트 폴더에 들어가서 build->libs->war파일) <br>
+
+그 다음 로컬 cmd창에서 <br>
+
+```
+scp "C:\path\creator_hub\build\libs\war파일명.war" username@ubuntu_server_ip:/opt/tomcat/webapps/
+```
+
+war파일을 전송한다. <br>
+
+```
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 나오면 YES
+```
+
+웹서버 비밀번호를 입력해주면 전송 완료.<br>
+
+파일 전송이 잘 되었는지 웹서버에서 war파일을 확인해준다.<br>
+
+```
+cd /opt/tomcat/webapps
+ls
+```
+
+중간 중간 권한에 대한 거부 메세지가 발생하면 해당 폴더 경로 앞에 ls -l /경로명
+해주면 권한 목록이 나오는데 위에 명령어를 참고해서 권한 수정을 해주면 된다. 
+
+그러면 이제 톰캣을 재시작 하면 끝.
+
+```
+sudo /opt/tomcat/bin/shutdown.sh
+sudo /opt/tomcat/bin/startup.sh
+```
+
+
+#### 💡 필요시 유용한 명령어 모음
+
+```
+//(에러) 오류메세지 로그 파일 내용 확인
+sudo cat /opt/tomcat/logs/catalina.out
+//(에러) 오류메세지로그 파일 마지막 부분 확인
+sudo tail -n 100 /opt/tomcat/logs/catalina.out
+// 톰캣 상태 확인
+ps aux | grep tomcat
+```
+
+
+## 🔒 css,js파일이 로드가 안되는 오류
+
+css,js파일을 resources/static 아래 두었는데, 웹서버 배포시 브라우저에 <br>
+
+```
+Whitelabel Error Page
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Thu Oct 24 14:13:25 UTC 2024
+There was an unexpected error (type=Not Found, status=404). 
+```
+
+그리고 console
+
+```
+failed to load resource: the server responded with a status of 404 ()
+```
+
+css랑 js파일이 로드가 안되고 있었다.<br>
+
+
+경로가 잘못되었다라는 생각에 일단 jsp파일을 다시 확인했고, application.properties 설정도 다시 확인했다. <br>
+
+```java
+// jsp 파일
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+    <script src="${path}/js/index.js"></script>
+    <link rel="stylesheet" href="${path}/css/index.css"/>
+```
+
+```
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+server.servlet.jsp.init-parameters.development=true
+spring.web.resources.static-locations=classpath:/static/
+```
+
+설정은 아주 잘 되어 있다.<br>
+왜 그렇게 생각했냐면 로컬에서는 실행이 잘 되고 있기 때문에<br>
+controller getmapping이나 jsp파일이나 경로 설정에는 문제가 없다. <br>
+그렇다면 웹서버에서 경로를 찾을 때 뭔가 문제가 있다고 생각이 들었다. <br>
+
+
+### 🔓 문제 해결 과정
+
+css,js파일이 war파일에 제대로 잘 포함되었는지 먼저 확인이 필요했고<br>
+
+브라우저에 http://서버_IP:8080/css/style.css 접속 <br>
+css파일이 잘 로드 되고 있었다. 
+
+console 다시 확인
+
+```
+http://웹서버IP주소/css/index.css net::ERR_ABORTED 404 (Not Found)
+```
+
+step1에서 필자가 war파일명을 바꾼 이유가 바로 이거였다.<br>
+블로그를 정리하면서 war파일명을 미리 수정하도록 해야 이런 문제가 발생하지 않을 것 같았다.<br>
+
+이전에는 웹브라우저에 접속하기 위해서는 **http://웹서버IP주소/war파일명**이 필요했고 jsp파일에 css파일 경로가 <br>
+당연히 ip주소/css/index.css로 되어있으니 css파일을 로드하지 못했던 것이다. <br>
+그래서 파일명만 수정해주었더니 바로 로드가 되었고 오늘의 목표였던 웹서버 배포가 끝났다...<br>
+
+
+![image](https://github.com/user-attachments/assets/495e18e7-79d3-49d0-a123-783f2c58a386)
+
+도커 컴포즈로 배포해보고 싶었지만... 다음 기회에..
+
+
+
+
+
+
+
+
+
