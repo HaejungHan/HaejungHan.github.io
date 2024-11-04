@@ -39,5 +39,27 @@ Apache spark view에서 javax패키지의 servlet을 사용하는데 spring boot
 
 내가 spark를 사용하려고 했던 이유는 대용량 데이터를 빠르게 처리
 
+```java
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.spark.unsafe.Platform (file:/C:/Users/guro13/.gradle/caches/modules-2/files-2.1/org.apache.spark/spark-unsafe_2.12/3.5.3/2b80fdeb3a47eea098c240db78d9aa8d153a1b2/spark-unsafe_2.12-3.5.3.jar) to constructor java.nio.DirectByteBuffer(long,int)
+WARNING: Please consider reporting this to the maintainers of org.apache.spark.unsafe.Platform
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+```
+
+어플리케이션을 실행할 때 마다 이 로그가 뜨는데, 이 에러메세지는 다음과 같다. 
+**불법 반사 접근**은 Java에서 특정 클래스나 메서드에 접근할 때, 일반적으로 허용되지 않는 방법으로 접근하려고 할 때 발생하는 경고이다. 쉽게 말해, Java는 각 클래스와 메서드에 대한 접근 권한을 설정해 두는데, 그 규칙을 어기고 접근하려고 할 때 이 경고가 나타나는 것이다.
+
+Java 9부터는 모듈 시스템이 도입되면서, 클래스의 접근 권한이 더 엄격해졌기에 이제는 특정 클래스에 접근하기 위해선 명시적으로 허락을 받아야 한다.
+그런데 Spark는 내부적으로 DirectByteBuffer라는 특별한 메모리 버퍼를 사용해 성능을 높이는데, 이 클래스에 직접 접근해야 할 때가 있다고 한다. 그런데 Spark가 이 클래스의 접근 규칙을 무시하고 접근하려고 하다 보니, 경고가 발생하는 현상이다.
+
+```java
+//Java의 모듈 시스템에서 특정 패키지에 대한 접근을 허용하는 명령어
+--add-opens java.base/java.nio=ALL-UNNAMED
+```
+
+로 저 경고를 무시할 수 있지만.. 참 .. 착잡하다.. 방법을 찾고 싶지만 어디에서도 찾아보기가 힘들다..
+
+
 
 
