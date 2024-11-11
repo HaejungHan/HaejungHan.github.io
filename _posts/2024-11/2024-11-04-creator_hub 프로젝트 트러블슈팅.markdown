@@ -3,7 +3,7 @@ title: TIL(20241104) [Creator_hub 프로젝트 - 트러블 슈팅]
 author: hanni
 date: 2024-11-04 23:50:00 +0800
 categories: TIL
-tags: [SpringBoot, Apache spark, spring scheduling, spring batch]
+tags: [SpringBoot, Apache spark]
 ---
 
 ----------------------------------------------------------------------------
