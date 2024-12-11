@@ -27,11 +27,23 @@ Desktop Image 옆에 있는 64-bit PC desktop image 를 선택해서 설치했�
 CD/DVD 쪽에 Use ISO image file 에 ubuntu-20.04.6-desktop-amd64.iso 파일을 입력해준 후 OK
 
 
+## 💡 파이썬 설치 및 실행
+
+![image](https://github.com/user-attachments/assets/a3bf65e5-4320-4354-8331-d6a99d92da50)
+
+기존에 설치 되어있던 파이썬을 지우고 다시 재설치!
+
+패키지 까지 완벽하게 삭제하기 위해서 아래 명령어 
+
+```
+sudo apt autoremove
+```
 
 
 
-리눅스 명령어
+## 💡 리눅스 명령어
 
+```
 who 
 - 사용자 정보 확인
 uname 
@@ -46,13 +58,10 @@ pwd
 - 내가 현재 작업중인 디렉터리를 알려줌
 ls -la
 -폴더에 대한 상세내역
-
 clear 
 - 명령어 정리
-
 cd ~
 - home 디텍토리 나의 집? 으로 이동
-
 ls -i
 -i.node 번호 확인
 
@@ -62,6 +71,6 @@ chmod u+rwx 디렉토리경로 또는 경로 + 파일명
 
 gedit 경로/텍스트파일명
 - 텍스트 파일 편집기
-
+```
 
 [리눅스 환경에서 nano에디터 단축키 모음](https://techplay.blog/%EC%9D%B4%EA%B2%83%EB%A7%8C-%EA%BC%AD-%EA%B8%B0%EC%96%B5%ED%95%98%EC%9E%90-%EB%82%98%EB%85%B8nano-%EC%97%90%EB%94%94%ED%84%B0-%ED%95%84%EC%88%98-%EB%8B%A8%EC%B6%95%ED%82%A4-30%EA%B0%80%EC%A7%80/)
