@@ -39,6 +39,15 @@ CD/DVD 쪽에 Use ISO image file 에 ubuntu-20.04.6-desktop-amd64.iso 파일을 
 sudo apt autoremove
 ```
 
+![image](https://github.com/user-attachments/assets/634bc0b5-e078-431a-83b5-85efdc5989e1)
+
+![image](https://github.com/user-attachments/assets/7831ac57-c391-4d5f-b190-4c00ba5b2f2f)
+
+
+**참고**
+파이썬을 다시 삭제하고 설치했더니 GUI로 들어가지지 않는다..
+
+오로지 터미널만 열리는 점 ! 주의.. 다시 설치해야할 수 있으니 선택...
 
 
 ## 💡 리눅스 명령어
@@ -71,6 +80,18 @@ chmod u+rwx 디렉토리경로 또는 경로 + 파일명
 
 gedit 경로/텍스트파일명
 - 텍스트 파일 편집기
+```
+
+nano와 vim 자주 쓰는 명령어
+
+```
+// nano
+ctrl + o -> enter -> ctrl + x  저장 후 나감
+
+// vim
+:wq 저장 후 나감
+:q 저장 안하고 나감
+:q! 저장 안하고 강제종료
 ```
 
 [리눅스 환경에서 nano에디터 단축키 모음](https://techplay.blog/%EC%9D%B4%EA%B2%83%EB%A7%8C-%EA%BC%AD-%EA%B8%B0%EC%96%B5%ED%95%98%EC%9E%90-%EB%82%98%EB%85%B8nano-%EC%97%90%EB%94%94%ED%84%B0-%ED%95%84%EC%88%98-%EB%8B%A8%EC%B6%95%ED%82%A4-30%EA%B0%80%EC%A7%80/)
