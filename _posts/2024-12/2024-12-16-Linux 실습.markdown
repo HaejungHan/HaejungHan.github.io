@@ -1,0 +1,123 @@
+---
+title: TIL(20241216) [Linux & Ubuntu 실습]
+author: hanni
+date: 2024-12-16 14:50:00 +0800
+categories: TIL
+tags: [Linux, Ubuntu]
+---
+
+----------------------------------------------------------------------------
+
+리눅스 명령어에 익숙해지기 위해 실습해보기!
+
+## 문제1 : 디렉토리 생성 및 이동
+
+![image](https://github.com/user-attachments/assets/d5b82357-4f53-4359-bb7f-182dec9abdf5)
+
+```
+1) 현재 위치에 projects 디렉토리 생성
+2) projects 디렉토리 안에 web, mobile 하위디렉토리 생성
+```
+
+## 문제 2 : 빈 파일 생성 및 파일목록 확인
+
+![image](https://github.com/user-attachments/assets/64ff5d13-c5bb-4b55-ad9b-977aff90fb3a)
+
+```
+1) web 디렉토리 안에 index.html, style.css, app.js 빈 파일 생성
+2) 파일목록 확인
+```
+
+## 문제 3 : 파일 내용 추가
+
+![image](https://github.com/user-attachments/assets/9c3d89d4-aab8-47d1-b0a2-14930f333460)
+
+```
+1) index.html 파일 내용 넣기 
+2) nano : ctrl + o -> enter-> ctrl + x
+3) vi : esc + i -> 입력 ctrl + c -> :wq
+```
+
+아직 vi 에디터는 익숙치 않아서 어렵당..
+nano가 아직 편해서 여러 에디터를 잘 사용하면 좋겠지만 
+익숙함은 참 무섭다.. 😂
+
+<br>
+*참고*<br> 
+cat 파일명의 경우 짧은 내용이면 확인 가능!
+
+## 문제 4 : 파일 복사 및 이름 변경
+
+![image](https://github.com/user-attachments/assets/74251279-21ec-4810-b7b1-1b9f63f5c752)
+
+```
+1) index.html 파일을 web 디렉토리의 부모디렉토리로 복사
+2) 복사된 파일 이름을 homepage.html로 변경
+```
+
+
+## 문제 5 : 파일 이동
+
+![image](https://github.com/user-attachments/assets/dca8dbca-ed86-4c2a-ab8b-1551bf24b2c8)
+
+```
+1) app.js 파일 projects/mobile 디렉토리 이동
+2) 이동 되었는지 확인
+```
+
+## 문제 6 : 디렉토리와 파일 삭제
+
+![image](https://github.com/user-attachments/assets/948b2a12-d822-4786-9bea-7d1eca66d0c0)
+
+```
+1) mobile 디렉토리 삭제
+2) web 디렉토리에 있는 style.css 파일 삭제
+```
+
+mobile 디렉토리에 app.js파일이 있기 때문에 삭제가 불가능하다.
+그래서 rm -r mobile/* (파일이 다수 있는 경우 유용)로 디렉토리 내 파일을 삭제해주고 rmdir로 디렉토리 삭제!
+
+![image](https://github.com/user-attachments/assets/43a7fa81-f22b-49cb-b7c9-b411342873e4)
+
+## 문제 7 : 파일 권한 변경
+
+파일 권한 변경은 두 가지 방법이 있는데 심볼릭 모드, 숫자를 사용해서 권한 설정하는 방법이 있다.
+
+![image](https://github.com/user-attachments/assets/37a303f8-9831-4a81-a988-2b429a5760d0)
+
+```
+// chmod 744 
+- 소유자 rwx / 그룹,기타사용자 r
+
+// chmod 755 
+- 소유자 rwx / 그룹,기타사용자 rx
+
+// chmod 666
+- 소유자 rw 
+
+// chmod 700
+- 소유자 rwx / 그룹,기타사용자 권한제거
+```
+
+u(사용자), g(그룹), o(기타사용자), a(모든사용자)<br>
+r(읽기), w(쓰기), x(실행) <br>
++(추가), -(제거), =(설정) <br>
+
+심볼릭 모드 사용 시
+
+```
+chmod [사용자그룹][+/-/=][권한] 파일명
+
+```
+
+## 문제 8 : 파일 내용 검색
+
+![image](https://github.com/user-attachments/assets/0c9d5ff5-3cb6-4df5-95cb-459dbb47fd51)
+
+```
+1) homepage.html 파일에서 Linux라는 단어가 포함된 줄 검색
+2) html, head라는 단어가 포함된 줄 검색
+```
+
+리눅스 명령어에 어느정도 익숙해진 것 같은데!
+뭔가 왜 재밌지...??😅
