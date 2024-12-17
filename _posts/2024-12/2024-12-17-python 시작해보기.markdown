@@ -1,0 +1,41 @@
+---
+title: TIL(20241217) [Python 시작해보기]
+author: hanni
+date: 2024-12-17 11:50:00 +0800
+categories: TIL
+tags: [python]
+---
+
+----------------------------------------------------------------------------
+
+Python 시작해보기
+
+이전에 Spark로 개인 프로젝트를 진행하면서 python으로 한 번 해보고 싶다는 생각을 하게 되었는데... 그 이유는
+개인 프로젝트에서 부딪혔던 문제 관련해서 조언을 구하던 중 아는 지인분이 PySpark를 이용해보는 것도 좋을거 같다는 말씀을 해주셨기 때문에! 음... 일단 시작해보자. 
+
+python 3.13 버전을 설치했고 블로그를 찾아보니 가상환경을 구축해야한다는!
+
+블로그를 이리저리 찾아보고 진행했다.<br>
+
+**주의**<br>
+python 설치시 Addpath설정을 꼭 해주어야 한다! <br>
+못했다면 수동으로 환경변수 설정을 꼭 해줄 것<br>
+
+powershell 관리자 권한으로 실행
+
+![image](https://github.com/user-attachments/assets/480d23b5-1642-45d6-9693-9f5e798b793b)
+
+`실행정책 변경`
+
+![image](https://github.com/user-attachments/assets/1daf8995-e8d2-417b-a0c9-0c5b4921b884)
+
+`가상환경 활성화`
+
+![image](https://github.com/user-attachments/assets/093710a2-21e2-4f69-b55a-8924c635ea7b)
+
+
+(venv)라고 변경되면 가상 환경이 활성화 된 것!
+
+![image](https://github.com/user-attachments/assets/04104ec3-baf2-42c3-95da-73e5232ddfaa)
+
+프로젝트 폴더에 위와 같이 venv 디렉토리가 생성된 것을 볼 수 있다.
