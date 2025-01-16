@@ -1,5 +1,5 @@
 ---
-title: [기술리뷰: TypeORM, query&queryOne의 차이]
+title: [기술리뷰 TypeORM/query&queryOne의 차이]
 author: hanni
 date: 2025-01-13 09:00:00 +0800
 categories: TIL
